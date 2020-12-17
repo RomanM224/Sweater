@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/static/js/bootstrap.min.js}"></script>
+<link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <div th:insert="fragments/navBar.html :: navigationBar"></div>
+    <div sec:authorize="isAuthenticated()">This content is only shown to authenticated users.</div>
+    <h1>Main Page</h1>
+</body>
+</html>

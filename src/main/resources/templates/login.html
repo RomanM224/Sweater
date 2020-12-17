@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Log In</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/static/js/bootstrap.min.js}"></script>
+<link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css">
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+</head>
+
+<body>
+    <div th:insert="fragments/navBar.html :: navigationBar"></div>
+
+    <div class="container mt-3">
+        <div>
+            <div class="alert alert-success" role="alert" th:if="${param.logout != null}">
+                <h3 th:if="${param.logout}">You have been logged out.</h3>
+            </div>
+            <div th:class="'alert alert-' + ${messageType}" role="alert" th:if="${message != null}">
+                <h3 th:text="${message}"></h3>
+            </div>
+            <div class="alert alert-danger" role="alert" th:if="${session.SPRING_SECURITY_LAST_EXCEPTION != null}">
+                <h4 th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></h4>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <h1>Login Page</h1>
+        <form th:action="@{/login}" method="post">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> User Name :</label>
+                <div class="col-sm-6">
+                    <input type="text" name="username" class="form-control" placeholder="User name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> Password: </label>
+                <div class="col-sm-6">
+                    <input type="password" name="password" class="form-control" placeholder="Password" />
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="Sign In" class="btn btn-primary" />
+            </div>
+            <a th:href="@{/registration}">Add new user</a>
+        </form>
+
+    </div>
+</body>
+</html>

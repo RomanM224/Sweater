@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Messages</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script th:src="@{/static/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/static/js/bootstrap.min.js}"></script>
+<link th:href="@{/static/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/static/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div th:insert="fragments/navBar.html :: navigationBar"></div>
+    <div class="container mt-3">
+        <div class="form-row ">
+            <div class="form-group col-md-6">
+                <form th:action="@{/message/main}" th:method="get" class="form-inline">
+                    <input type="text" name="filter" class="form-control" th:value="${filter}" placeholder="Find by tag">
+                    <input class="btn btn-primary ml-2" type="submit" value="Find" />
+                </form>
+            </div>
+        </div>
+
+
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseMessage" role="button" aria-expanded="false"
+            aria-controls="collapseExample"> Add new Message </a>
+        <div th:class=" ${message == null} ? 'collapse' : 'collapse show'" id="collapseMessage">
+            <div class="form-group mt-3">
+                <form th:action="@{/message/create}" th:method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" th:class="${textError == null} ? 'form-control' : 'form-control is-invalid'"
+                            name="text" th:value="${message != null} ? ${message.getText()} : ''"
+                            placeholder="Input message..." />
+                        <div class="invalid-feedback" th:text="${textError != null} ? ${textError} : ''"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" th:class="${tagError == null} ? 'form-control' : 'form-control is-invalid'"
+                            name="tag" th:value="${message != null} ? ${message.getTag()} : ''"
+                            placeholder="Input tag..." />
+                        <div class="invalid-feedback" th:text="${tagError != null} ? ${tagError} : ''"></div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" name="file" id="customeFile" />
+                            <label class="custom-file-label" for="customeFile">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-info btn-lg mt-2" type="submit" value="Create" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-columns">
+            <div th:each="message: ${messages}">
+                <div class="card my-3">
+                    <div th:if="${message.getFileName() != null}">
+                        <img class="card-img-top" th:src="${'/img/' + message.getFileName()}">
+                    </div>
+                    <div class="m-2">
+                        <b th:text="${message.getText}"></b>
+                        <i th:text="${message.getTag}"></i>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <span th:text="${message.getAuthor}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
