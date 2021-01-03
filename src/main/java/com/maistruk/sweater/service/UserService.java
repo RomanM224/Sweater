@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
 
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
-                    "Hello, %s! \nWelcome to Sweater. " + "Please visit next link: %s/activate/%s", user.getUserName(),
+                    "Hello, %s! \nWelcome to Sweater. " + "Please visit next link: http://%s/activate/%s", user.getUserName(),
                     host, user.getActivationCode());
             mailSender.send(user.getEmail(), "Activation code", message);
         }
